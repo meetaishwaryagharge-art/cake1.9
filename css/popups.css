@@ -1,0 +1,26 @@
+/* Varyzon popups - matches the site's cream / brown / rose palette */
+.vz-modal .modal-content{background:var(--cream,#fbf3ea);border:1.5px dashed var(--brown-m,#7a3a22);border-radius:24px;}
+.vz-modal .modal-body{padding:1.8rem 1.8rem 1.6rem;position:relative;}
+.vz-modal .btn-close{position:absolute;right:1.1rem;top:1.1rem;z-index:5;}
+.vz-head{text-align:center;margin-bottom:1.2rem;padding:0 1rem;}
+.vz-head h3{font-size:clamp(1.4rem,3vw,1.8rem);margin:.4rem 0 .2rem;}
+.vz-head p{margin:0;font-size:.88rem;color:#7a655d;}
+.vz-ic{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--brown,#4a1f12);color:var(--gold-light,#f2c3b9);font-size:1.25rem;}
+.vz-fl{display:block;font-size:.78rem;font-weight:600;color:var(--brown,#4a1f12);margin-bottom:.3rem;}
+.vz-modal .form-control,.vz-modal .form-select{border-radius:12px;border:1.5px solid var(--cream-d,#f1e2d0);background:#fff;padding:.6rem .85rem;font-size:.92rem;}
+.vz-modal .form-control:focus,.vz-modal .form-select:focus{border-color:var(--gold,#b16156);box-shadow:0 0 0 .2rem rgba(177,97,86,.18);}
+.vz-form.was-validated .form-control:invalid,.vz-form.was-validated .form-select:invalid{border-color:#c0392b;}
+.vz-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+.vz-err{margin-top:.7rem;padding:.55rem .8rem;border-radius:10px;background:#fdecea;color:#a12622;font-size:.82rem;}
+.vz-or{display:flex;align-items:center;gap:.8rem;margin:0 0 1rem;color:#7a655d;font-size:.78rem;}
+.vz-or::before,.vz-or::after{content:"";flex:1;height:1px;background:var(--cream-d,#f1e2d0);}
+.vz-sum{list-style:none;margin:0 0 1.1rem;padding:.7rem 1rem;background:#fff;border-radius:14px;max-height:170px;overflow:auto;font-size:.88rem;}
+.vz-sum li{display:flex;justify-content:space-between;gap:1rem;padding:.3rem 0;border-bottom:1px dashed var(--cream-d,#f1e2d0);}
+.vz-sum li:last-child{border:0;}
+.vz-sum .tot{font-weight:700;color:var(--brown,#4a1f12);}
+.vz-ok{text-align:center;padding:1rem .5rem .3rem;}
+.vz-ok p{color:#7a655d;font-size:.92rem;margin:0;}
+.vz-tick{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;background:#2fa84f;color:#fff;font-size:1.6rem;margin-bottom:.6rem;animation:vzPop .5s cubic-bezier(.2,1.6,.4,1) both;}
+@keyframes vzPop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.vz-tick{animation:none}}
+@media (max-width:575.98px){.vz-modal .modal-body{padding:1.4rem 1.1rem 1.2rem;}}

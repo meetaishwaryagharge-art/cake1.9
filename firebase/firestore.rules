@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only these accounts can use the dashboard. Replace with your admin email(s).
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['varyzon2024@gmail.com'];
+    }
+
+    // Website visitors may only CREATE new records (with sane limits). Only admins read / edit / delete.
+    function validLead() {
+      return request.resource.data.keys().hasAll(['name', 'phone', 'status', 'createdAt'])
+        && request.resource.data.name is string  && request.resource.data.name.size()  <= 120
+        && request.resource.data.phone is string && request.resource.data.phone.size() <= 20
+        && request.resource.data.status == 'new'
+        && request.resource.data.keys().size() <= 20;
+    }
+
+    match /orders/{id}          { allow create: if validLead(); allow read, update, delete: if isAdmin(); }
+    match /enquiries/{id}       { allow create: if validLead(); allow read, update, delete: if isAdmin(); }
+    match /callbacks/{id}       { allow create: if validLead(); allow read, update, delete: if isAdmin(); }
+    match /customizations/{id}  { allow create: if validLead(); allow read, update, delete: if isAdmin(); }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}

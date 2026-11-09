@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Varyzon Cake Shop</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+:root{--maroon:#5c0f26;--maroon-dark:#2e0614;--maroon-mid:#7a1a38;--gold:#c8963e;--gold-light:#e6c27a;--cream:#fdf3f1;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;margin:0;color:#2a1a1f;background:#fff;overflow-x:hidden;}
+h1,h2,h3{font-family:'Playfair Display',serif;}
+a{text-decoration:none;}
+.veg-mark{width:26px;height:26px;border:2.5px solid #2fa84f;background:#fff;border-radius:5px;display:inline-grid;place-items:center;flex:none;}
+.veg-mark::after{content:"";width:12px;height:12px;border-radius:50%;background:#2fa84f;}
+
+/* ---------- TOP BAR + NAV (over hero) ---------- */
+.topbar{position:absolute;top:0;left:0;right:0;z-index:30;color:#fff;font-size:.82rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.15);}
+.topbar a{color:#fff;} .topbar i{color:var(--gold-light);margin-right:.45rem;}
+.topbar a:hover{color:var(--gold-light);}
+.main-nav{position:absolute;top:46px;left:0;right:0;z-index:30;padding:.7rem 0;transition:background .35s,box-shadow .35s,padding .35s;}
+.main-nav.scrolled{position:fixed;top:0;background:rgba(46,6,20,.94);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.3);padding:.4rem 0;animation:dropIn .5s both;}
+@keyframes dropIn{from{transform:translateY(-100%)}to{transform:none}}
+.brand{display:flex;flex-direction:column;line-height:1;color:#fff;}
+.brand .name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:600;letter-spacing:.02em;}
+.brand .name sup{font-size:.6rem;color:var(--gold-light);}
+.brand .tag{font-family:'Great Vibes',cursive;font-size:1.15rem;color:var(--gold-light);}
+.navbar-nav .nav-link{color:#fff;font-weight:500;font-size:.93rem;padding:.5rem 1rem!important;position:relative;}
+.navbar-nav .nav-link::after{content:"";position:absolute;left:1rem;right:1rem;bottom:2px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.navbar-nav .nav-link:hover::after,.navbar-nav .nav-link.active::after{transform:scaleX(1);}
+.navbar-nav .nav-link:hover,.navbar-nav .nav-link.active{color:var(--gold-light);}
+.navbar-toggler{border:1px solid rgba(255,255,255,.4);} .navbar-toggler-icon{filter:invert(1);}
+.dropdown-menu{border:0;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.2);padding:.5rem;}
+.dropdown-item{border-radius:8px;} .dropdown-item:hover{background:var(--cream);color:var(--maroon);}
+.btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,#f0cf85,var(--gold) 60%,#b98425);color:#3b1a05;font-weight:600;border:0;border-radius:50px;padding:.8rem 1.6rem;transition:transform .3s,filter .3s;}
+.btn-gold:hover{color:#3b1a05;transform:translateY(-3px);filter:brightness(1.06);}
+.btn-gold i{margin:0 .35rem;}
+.btn-gold::after,.btn-ghost::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);}
+.btn-gold:hover::after,.btn-ghost:hover::after{left:140%;transition:left .7s;}
+.btn-ghost{position:relative;overflow:hidden;color:#fff;border:1.5px solid rgba(255,255,255,.7);border-radius:50px;padding:.8rem 1.6rem;font-weight:500;transition:.3s;}
+.btn-ghost:hover{background:#fff;color:var(--maroon);}
+.btn-ghost i{margin-right:.4rem;}
+.pulse{animation:pulseRing 2.6s infinite;}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(230,194,122,.55)}70%,100%{box-shadow:0 0 0 14px rgba(230,194,122,0)}}
+
+/* ---------- HERO (background images) ---------- */
+.hero{position:relative;height:100vh;min-height:680px;overflow:hidden;background:var(--maroon-dark);}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 1.2s;}
+.slide.active{opacity:1;visibility:visible;}
+.slide .bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.15);}
+.slide.active .bg{animation:kenburns 9s ease-out forwards;}
+@keyframes kenburns{to{transform:scale(1)}}
+.slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(46,6,20,.92) 0%,rgba(71,10,28,.65) 45%,rgba(20,3,10,.12) 100%),linear-gradient(0deg,rgba(46,6,20,.65),transparent 35%);}
+.slide .content{position:relative;z-index:5;height:100%;display:flex;align-items:center;padding-top:90px;}
+.eyebrow{display:inline-flex;align-items:center;gap:.8rem;color:var(--gold-light);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.85rem;margin-bottom:1.2rem;}
+.eyebrow::before{content:"";width:54px;height:2px;background:var(--gold);}
+.slide h1{color:#fff;font-weight:500;font-size:clamp(2.7rem,6vw,5rem);line-height:1.08;margin-bottom:1.3rem;text-shadow:0 4px 24px rgba(0,0,0,.35);}
+.slide h1 em{font-style:italic;color:var(--gold-light);}
+.slide p.sub{color:rgba(255,255,255,.92);font-size:1.2rem;line-height:1.6;max-width:480px;margin-bottom:2rem;}
+.slide .eyebrow,.slide h1,.slide p.sub,.slide .actions{opacity:0;}
+.slide.active .eyebrow{animation:fadeUp .8s .3s both;} .slide.active h1{animation:fadeUp .8s .45s both;}
+.slide.active p.sub{animation:fadeUp .8s .6s both;} .slide.active .actions{animation:fadeUp .8s .75s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+.veg-pill{position:absolute;z-index:6;right:6%;top:50%;display:flex;align-items:center;gap:.8rem;padding:.8rem 1.3rem;border-radius:50px;color:#fff;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35);animation:floaty 4s ease-in-out infinite;}
+.veg-pill strong{font-family:'Playfair Display',serif;font-size:1.5rem;line-height:1;display:block;}
+.veg-pill small{font-size:.8rem;opacity:.9;}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-ctrl{position:absolute;z-index:8;left:0;right:0;bottom:120px;}
+.hero-ctrl .wrap{display:flex;align-items:center;gap:1.2rem;}
+.arrow{width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;transition:.3s;cursor:pointer;}
+.arrow:hover{background:var(--gold);border-color:var(--gold);color:#3b1a05;}
+.bars{display:flex;gap:10px;}
+.bars button{width:64px;height:4px;border:0;border-radius:4px;background:rgba(255,255,255,.3);padding:0;position:relative;overflow:hidden;}
+.bars button i{position:absolute;inset:0;background:var(--gold-light);transform:scaleX(0);transform-origin:left;}
+.bars button.active i{animation:bar 6s linear forwards;}
+@keyframes bar{to{transform:scaleX(1)}}
+.scroll-cue{position:absolute;z-index:8;right:6%;bottom:128px;color:#fff;font-size:1.4rem;animation:floaty 2s ease-in-out infinite;}
+
+/* ---------- STATS ---------- */
+.stats{position:relative;z-index:10;margin-top:-80px;}
+.stat{background:#fff;border-radius:20px;padding:1.5rem 1.2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 20px 44px rgba(46,6,20,.16);border-bottom:4px solid var(--gold);transition:transform .35s;height:100%;}
+.stat:hover{transform:translateY(-8px);}
+.stat .ic{width:56px;height:56px;border-radius:16px;flex:none;display:grid;place-items:center;font-size:1.6rem;color:var(--gold-light);background:linear-gradient(135deg,var(--maroon-mid),var(--maroon));}
+.stat b{display:block;font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--maroon);line-height:1;}
+.stat span{font-size:.82rem;color:#5b4a4f;}
+
+/* ---------- SHARED ---------- */
+.sec{padding:6rem 0;position:relative;}
+.kicker{display:inline-flex;align-items:center;gap:.7rem;color:var(--gold);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.82rem;margin-bottom:.8rem;}
+.kicker::before{content:"";width:40px;height:2px;background:var(--gold);}
+.title{font-size:clamp(2rem,3.6vw,3rem);font-weight:600;color:var(--maroon);line-height:1.15;margin-bottom:1.2rem;}
+.js .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s);}
+.js .reveal.l{transform:translateX(-60px);} .js .reveal.r{transform:translateX(60px);} .js .reveal.zoom{transform:scale(.9);}
+.js .reveal.in{opacity:1;transform:none;}
+
+/* ---------- ABOUT ---------- */
+.about{background:linear-gradient(120deg,#fff,var(--cream));padding-top:8rem;}
+.chef-stage{position:relative;max-width:380px;margin:0 auto;}
+.chef-stage .ring{position:absolute;inset:-22px;border-radius:200px 200px 40px 40px;border:2px dashed var(--gold);animation:spin 40s linear infinite;opacity:.7;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chef-stage .frame{position:relative;border-radius:190px 190px 28px 28px;overflow:hidden;aspect-ratio:3/4;background:linear-gradient(160deg,var(--maroon-mid),var(--maroon-dark));border:5px solid #fff;box-shadow:0 30px 60px rgba(92,15,38,.3);}
+.chef-stage .frame .ph{position:absolute;inset:0;display:grid;place-items:center;font-size:10rem;color:rgba(255,255,255,.3);}
+.chef-stage .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 1s;}
+.chef-stage:hover .frame img{transform:scale(1.07);}
+.chef-card{position:absolute;left:-30px;bottom:34px;z-index:3;background:#fff;border-radius:16px;padding:.8rem 1.1rem;box-shadow:0 14px 32px rgba(0,0,0,.18);display:flex;align-items:center;gap:.8rem;animation:floaty 5s ease-in-out infinite;}
+.chef-card i{font-size:1.6rem;color:var(--gold);}
+.chef-card b{display:block;font-size:.92rem;color:var(--maroon);} .chef-card small{color:#6a5a5f;}
+.about p.lead2{line-height:1.85;color:#3a2a2f;max-width:520px;margin-bottom:1.8rem;}
+.timeline{list-style:none;margin:0 0 2rem;padding:0 0 0 1.6rem;border-left:2px solid rgba(200,150,62,.5);}
+.timeline li{position:relative;padding:0 0 1.2rem 1.1rem;}
+.timeline li::before{content:"";position:absolute;left:-2.15rem;top:.3rem;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(200,150,62,.2);}
+.timeline b{display:block;color:var(--maroon);font-size:.98rem;} .timeline small{color:#5b4a4f;font-size:.84rem;line-height:1.6;}
+.btn-maroon{position:relative;overflow:hidden;background:var(--maroon);color:#fff;font-weight:600;border-radius:50px;padding:.8rem 1.7rem;box-shadow:0 8px 20px rgba(92,15,38,.3);transition:.3s;}
+.btn-maroon:hover{background:var(--maroon-dark);color:#fff;transform:translateY(-3px);}
+.btn-maroon i{margin-left:.4rem;transition:transform .3s;} .btn-maroon:hover i{transform:translateX(5px);}
+
+/* ---------- SPECIALITIES ---------- */
+.spec{background:radial-gradient(circle at 80% 10%,var(--maroon-mid),var(--maroon) 45%,var(--maroon-dark));color:#fff;overflow:hidden;}
+.spec::before,.spec::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(230,194,122,.25);animation:breathe 7s ease-in-out infinite;}
+.spec::before{width:520px;height:520px;left:-200px;top:-160px;} .spec::after{width:360px;height:360px;right:-120px;bottom:-120px;animation-delay:-3s;}
+@keyframes breathe{50%{transform:scale(1.12)}}
+.spec .title{color:#fff;} .spec .container-xl{position:relative;z-index:2;}
+.sp-card{height:100%;padding:2rem 1.6rem;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(230,194,122,.25);backdrop-filter:blur(6px);transition:transform .4s,background .4s,border-color .4s;}
+.sp-card:hover{transform:translateY(-10px);background:rgba(255,255,255,.12);border-color:var(--gold);}
+.sp-card .ic{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:1.9rem;color:#3b1a05;background:linear-gradient(135deg,#f0cf85,var(--gold));margin-bottom:1.2rem;position:relative;}
+.sp-card .ic::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid var(--gold-light);opacity:0;animation:ripple 3.4s ease-out infinite;}
+@keyframes ripple{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.4);opacity:0}}
+.sp-card:hover .ic i{animation:wiggle .6s;}
+@keyframes wiggle{25%{transform:rotate(-14deg) scale(1.15)}60%{transform:rotate(12deg) scale(1.15)}}
+.sp-card h4{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.4rem;}
+.sp-card p{margin:0;font-size:.9rem;color:rgba(255,255,255,.78);line-height:1.6;}
+
+/* ---------- CAKES MOSAIC ---------- */
+.cakes{background:#fff;}
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:16px;}
+.tile{position:relative;overflow:hidden;border-radius:22px;background:#ead6d1;}
+.tile.tall{grid-row:span 2;}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1);}
+.tile:hover img{transform:scale(1.12) rotate(1deg);}
+.tile .cap{position:absolute;inset:auto 0 0 0;padding:2.5rem 1.2rem 1.1rem;color:#fff;background:linear-gradient(0deg,rgba(46,6,20,.85),transparent);transform:translateY(40%);opacity:0;transition:.45s;}
+.tile:hover .cap{transform:none;opacity:1;}
+.tile .cap b{font-family:'Playfair Display',serif;font-size:1.25rem;display:block;} .tile .cap small{opacity:.85;}
+.tile.cta{grid-column:span 2;background:linear-gradient(135deg,var(--maroon-mid),var(--maroon-dark));color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:2rem;}
+.tile.cta h3{font-size:1.7rem;margin-bottom:.5rem;} .tile.cta p{margin:0 0 1rem;opacity:.85;font-size:.92rem;}
+.tile.cta>i{font-size:5.5rem;color:var(--gold-light);opacity:.9;animation:floaty 4s ease-in-out infinite;}
+
+/* ---------- VISION (parallax) ---------- */
+.vision{position:relative;padding:7rem 0;color:#fff;text-align:center;background:url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1600&q=70') center/cover fixed;}
+.vision::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(46,6,20,.88),rgba(92,15,38,.86));}
+.vision .container-xl{position:relative;z-index:2;}
+.trophy{position:relative;width:120px;height:120px;margin:0 auto 1.6rem;}
+.trophy .disc{position:absolute;inset:8px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f0cf85,var(--gold) 60%,#b98425);color:var(--maroon-dark);font-size:2.8rem;box-shadow:0 12px 30px rgba(0,0,0,.4);animation:floaty 4s ease-in-out infinite;}
+.trophy .rg{position:absolute;inset:8px;border-radius:50%;border:2px solid var(--gold-light);animation:ripple 3s ease-out infinite;} .trophy .rg+.rg{animation-delay:1.5s;}
+.vision h3{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;}
+.vision p{font-size:1.15rem;line-height:1.8;max-width:760px;margin:0 auto 1.8rem;color:rgba(255,255,255,.92);}
+.vision .sig{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--gold-light);line-height:1.1;}
+.vision .sig2{font-family:'Great Vibes',cursive;font-size:1.5rem;}
+
+/* ---------- FOOTER ---------- */
+.site-footer{background:var(--maroon-dark);color:#fff;padding:4.5rem 0 0;}
+.site-footer h4{font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:1.2rem;position:relative;padding-bottom:.7rem;}
+.site-footer h4::after{content:"";position:absolute;left:0;bottom:0;width:36px;height:2px;background:var(--gold);}
+.site-footer a{color:rgba(255,255,255,.85);} .site-footer a:hover{color:var(--gold-light);}
+.flinks{list-style:none;padding:0;margin:0;} .flinks li{margin-bottom:.6rem;} .flinks a{font-size:.92rem;display:inline-flex;align-items:center;gap:.6rem;transition:padding .25s,color .25s;} .flinks a:hover{padding-left:6px;} .flinks i{color:var(--gold);font-size:.7rem;}
+.crow{display:flex;gap:.9rem;margin-bottom:.9rem;font-size:.9rem;line-height:1.6;} .crow i{color:var(--gold-light);font-size:1.1rem;margin-top:2px;}
+.fsocial{display:flex;gap:.8rem;}
+.fsocial a{width:44px;height:44px;border-radius:50%;border:1px solid rgba(230,194,122,.5);display:grid;place-items:center;font-size:1.2rem;transition:.3s;}
+.fsocial a:hover{background:var(--gold);color:#3b1a05;transform:translateY(-4px) rotate(8deg);}
+.fbottom{margin-top:3.5rem;border-top:1px solid rgba(230,194,122,.35);padding:1.2rem 0;text-align:center;font-size:.88rem;color:rgba(255,255,255,.8);}
+.fbottom em{font-family:'Playfair Display',serif;color:var(--gold-light);}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:991.98px){
+  .main-nav{top:0;background:rgba(46,6,20,.92);} .topbar{display:none;}
+  .navbar-collapse{padding:1rem 0;} .navbar-nav .nav-link::after{display:none;}
+  .hero{min-height:720px;} .veg-pill{display:none;} .scroll-cue{display:none;}
+  .hero-ctrl{bottom:110px;} .slide::after{background:linear-gradient(0deg,rgba(46,6,20,.9),rgba(46,6,20,.55));}
+  .sec{padding:4.5rem 0;} .about{padding-top:6rem;}
+  .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px;} .tile.cta{grid-column:span 2;}
+  .vision{background-attachment:scroll;}
+  .chef-card{left:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+  .js .reveal{opacity:1;transform:none;} .slide .eyebrow,.slide h1,.slide p.sub,.slide .actions{opacity:1;}
+  .slide .bg{transform:none;}
+}
+</style>
+<link rel="stylesheet" href="../css/popups.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container-xl d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <span><i class="fa-solid fa-location-dot"></i>Shop no 29 poonam cluster 2, near surya shopping center mira road east</span>
+    <span class="d-flex gap-4">
+      <a href="tel:+919082192602"><i class="fa-solid fa-phone"></i>+91 90821 92602</a>
+      <a href="mailto:varyzon2024@gmail.com"><i class="fa-solid fa-envelope"></i>varyzon2024@gmail.com</a>
+    </span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg main-nav">
+  <div class="container-xl">
+    <a href="../index.html" class="brand"><span class="name">Varyzon<sup>&reg;</sup></span><span class="tag">Freshly baked cakes</span></a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse justify-content-end" id="nav">
+      <ul class="navbar-nav align-items-lg-center">
+        <li class="nav-item"><a class="nav-link active" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Our Cakes</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Birthday Cakes</a></li>
+            <li><a class="dropdown-item" href="#">Wedding Cakes</a></li>
+            <li><a class="dropdown-item" href="#">Chocolate Cakes</a></li>
+            <li><a class="dropdown-item" href="#">Custom Cakes</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#specialities">Our Specialities</a></li>
+        <li class="nav-item"><a class="nav-link" href="../gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="../contact.html">Contact</a></li>
+      </ul>
+      <a href="#order" class="btn btn-gold pulse ms-lg-3 mt-3 mt-lg-0"><i class="fa-solid fa-bag-shopping"></i>Order Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO: images used as full background -->
+<header class="hero" id="hero">
+  <div class="slide active">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1800&q=80')"></div>
+    <div class="content"><div class="container-xl">
+      <div class="eyebrow">Varyzon Cake Shop</div>
+      <h1>Baked with <em>Joy,</em><br>Shared with <em>Love.</em></h1>
+      <p class="sub">Premium Cakes, Pastries &amp; Desserts for Every Celebration</p>
+      <div class="actions d-flex flex-wrap gap-3">
+        <a href="#our-cakes" class="btn btn-gold">Explore Our Cakes<i class="fa-solid fa-arrow-right"></i></a>
+        <a href="tel:+919082192602" class="btn btn-ghost"><i class="fa-solid fa-phone"></i>Call Us</a>
+      </div>
+    </div></div>
+  </div>
+  <div class="slide">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1800&q=80')"></div>
+    <div class="content"><div class="container-xl">
+      <div class="eyebrow">Custom &amp; Designer Cakes</div>
+      <h1>Every Slice <em>Tells</em><br>a Sweet <em>Story.</em></h1>
+      <p class="sub">Custom cakes designed just for you</p>
+      <div class="actions d-flex flex-wrap gap-3">
+        <a href="#our-cakes" class="btn btn-gold">Explore Our Cakes<i class="fa-solid fa-arrow-right"></i></a>
+        <a href="tel:+919082192602" class="btn btn-ghost"><i class="fa-solid fa-phone"></i>Call Us</a>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="veg-pill"><span class="veg-mark"></span><div><strong>100%</strong><small>Pure Vegetarian</small></div></div>
+  <div class="hero-ctrl"><div class="container-xl"><div class="wrap">
+    <button class="arrow prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="bars"></div>
+    <button class="arrow next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+  </div></div></div>
+  <a href="#about" class="scroll-cue" aria-label="Scroll down"><i class="fa-solid fa-angles-down"></i></a>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container-xl">
+    <div class="row g-3">
+      <div class="col-6 col-lg-3"><div class="stat reveal"><div class="ic"><i class="fa-solid fa-award"></i></div><div><b><span data-count="25">0</span>+</b><span>Years of experience</span></div></div></div>
+      <div class="col-6 col-lg-3"><div class="stat reveal"><div class="ic"><i class="fa-solid fa-circle-check"></i></div><div><b><span data-count="100">0</span>%</b><span>Pure vegetarian</span></div></div></div>
+      <div class="col-6 col-lg-3"><div class="stat reveal"><div class="ic"><i class="fa-solid fa-gem"></i></div><div><b>Custom</b><span>Designer cakes</span></div></div></div>
+      <div class="col-6 col-lg-3"><div class="stat reveal"><div class="ic"><i class="fa-solid fa-cake-candles"></i></div><div><b>Every</b><span>Celebration covered</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec about" id="about">
+  <div class="container-xl">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="chef-stage reveal l">
+          <span class="ring"></span>
+          <!-- TEMPORARY chef photo: replace src with your real photo, e.g. images/chef-virendra.jpg -->
+          <div class="frame">
+            <i class="fa-solid fa-user-tie ph"></i>
+            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=700&q=80" alt="Chef Virendra Sawant" onerror="this.remove()">
+          </div>
+          <div class="chef-card"><i class="fa-solid fa-trophy"></i><div><b>Chef Virendra Sawant</b><small>Founder, Varyzon Cake Shop</small></div></div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="kicker reveal">About Us</div>
+        <h2 class="title reveal">A Journey of Passion,<br>Expertise &amp; Excellence</h2>
+        <p class="lead2 reveal">Varyzon Cake Shop is a premium, 100% pure vegetarian bakery brand founded by Chef Virendra Sawant, bringing over 25 years of professional experience in the Bakery &amp; Pastry industry. Our passion is to create fresh, delicious, beautifully designed cakes and desserts.</p>
+        <ul class="timeline reveal">
+          <li><b>Five-Star Hotel Experience</b><small>Hyatt Regency, Le Royal Meridien and The Orchid, Mumbai</small></li>
+          <li><b>International Experience</b><small>Iraq &amp; Afghanistan</small></li>
+          <li><b>Entrepreneurial Journey</b><small>Occasion Cake Shop (2012 – 2023) and Varyzon Cake Shop</small></li>
+        </ul>
+        <a href="../about.html" class="btn btn-maroon reveal">Know More<i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALITIES -->
+<section class="sec spec" id="specialities">
+  <div class="container-xl">
+    <div class="text-center mb-5">
+      <div class="kicker reveal">What we bake</div>
+      <h2 class="title reveal">Our Specialities</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-cake-candles"></i></div><h4>Pure Vegetarian Cakes</h4><p>Every cake is 100% vegetarian, fresh and full of flavour.</p></div></div>
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-gem"></i></div><h4>Customized &amp; Designer Cakes</h4><p>Your idea, shaped into a one-of-a-kind cake.</p></div></div>
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-champagne-glasses"></i></div><h4>Birthday, Anniversary &amp; Wedding</h4><p>Centrepiece cakes for the days you remember.</p></div></div>
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-stroopwafel"></i></div><h4>Premium Pastries &amp; Desserts</h4><p>Delicate pastries and desserts, baked fresh daily.</p></div></div>
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-cookie-bite"></i></div><h4>Handmade Chocolates</h4><p>Small-batch chocolates, made by hand.</p></div></div>
+      <div class="col-md-6 col-lg-4"><div class="sp-card reveal"><div class="ic"><i class="fa-solid fa-gift"></i></div><h4>Corporate Orders &amp; Gifting</h4><p>Celebration hampers and bulk orders for teams.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR CAKES -->
+<section class="sec cakes" id="our-cakes">
+  <div class="container-xl">
+    <div class="row align-items-end mb-5 g-3">
+      <div class="col-lg-7"><div class="kicker reveal">Our Cakes</div><h2 class="title mb-0 reveal">Designed to Make Every Moment Special</h2></div>
+      <div class="col-lg-5"><p class="mb-0 text-secondary reveal">From elegant designer cakes to delightful pastries, we create sweet memories for you.</p></div>
+    </div>
+    <div class="mosaic">
+      <div class="tile tall reveal zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=75" alt="Chocolate cake slice"><div class="cap"><b>Chocolate Cakes</b><small>Rich, moist and indulgent</small></div></div>
+      <div class="tile reveal zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=75" alt="Premium dessert"><div class="cap"><b>Premium Desserts</b><small>Made fresh daily</small></div></div>
+      <div class="tile reveal zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=700&q=75" alt="Cupcakes"><div class="cap"><b>Cupcakes</b><small>Small bites, big joy</small></div></div>
+      <div class="tile tall reveal zoom"><img loading="lazy" src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=800&q=75" alt="Celebration cake"><div class="cap"><b>Celebration Cakes</b><small>Birthdays, anniversaries and more</small></div></div>
+      <div class="tile cta reveal zoom"><div><h3>See the full collection</h3><p>Find the cake for your next celebration.</p><a href="../our-cakes.html" class="btn btn-gold">View Our Collection<i class="fa-solid fa-arrow-right"></i></a></div><i class="fa-solid fa-cake-candles"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="container-xl">
+    <div class="trophy reveal zoom"><span class="rg"></span><span class="rg"></span><div class="disc"><i class="fa-solid fa-trophy"></i></div></div>
+    <h3 class="reveal">Our Vision</h3>
+    <p class="reveal">To establish Varyzon Cake Shop as a trusted premium bakery brand known for exceptional taste, innovative designs, consistent quality, and memorable customer experiences.</p>
+    <div class="reveal"><div class="sig">Varyzon Cake Shop</div><div class="sig2">Baked with Joy, Shared with Love.<i class="fa-solid fa-heart ms-2" style="font-size:1rem"></i></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <a href="../index.html" class="brand mb-3"><span class="name">Varyzon<sup>&reg;</sup></span><span class="tag">Freshly baked cakes</span></a>
+        <p style="font-size:.9rem;color:rgba(255,255,255,.75);max-width:320px">A premium, 100% pure vegetarian bakery with 25+ years of expertise behind every cake.</p>
+        <div class="fsocial mt-3">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h4>Quick Links</h4>
+        <ul class="flinks">
+          <li><a href="../index.html"><i class="fa-solid fa-chevron-right"></i>Home</a></li>
+          <li><a href="#about"><i class="fa-solid fa-chevron-right"></i>About Us</a></li>
+          <li><a href="#specialities"><i class="fa-solid fa-chevron-right"></i>Our Specialities</a></li>
+          <li><a href="../gallery.html"><i class="fa-solid fa-chevron-right"></i>Gallery</a></li>
+          <li><a href="../contact.html"><i class="fa-solid fa-chevron-right"></i>Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <h4>Get In Touch</h4>
+        <div class="crow"><i class="fa-solid fa-location-dot"></i><span>Shop no 29 poonam cluster 2, near surya shopping center, mira road east</span></div>
+        <div class="crow"><i class="fa-solid fa-phone"></i><a href="tel:+919082192602">+91 90821 92602</a></div>
+        <div class="crow"><i class="fa-solid fa-envelope"></i><a href="mailto:varyzon2024@gmail.com">varyzon2024@gmail.com</a></div>
+      </div>
+    </div>
+    <div class="fbottom"><strong>&copy; 2024 Varyzon Cake Shop. All Rights Reserved.</strong> &nbsp;|&nbsp; <em>Baked with Joy, Shared with Love.</em></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){
+  /* Hero slider with progress bars */
+  const slides=[...document.querySelectorAll('.slide')], wrap=document.querySelector('.bars');
+  let i=0,timer;
+  slides.forEach((_,n)=>{const b=document.createElement('button');b.innerHTML='<i></i>';b.setAttribute('aria-label','Slide '+(n+1));b.onclick=()=>{go(n);};wrap.appendChild(b);});
+  const bars=[...wrap.children];
+  function go(n){
+    slides[i].classList.remove('active');bars[i].classList.remove('active');
+    i=(n+slides.length)%slides.length;
+    void bars[i].offsetWidth;
+    slides[i].classList.add('active');bars[i].classList.add('active');
+    clearInterval(timer);timer=setInterval(()=>go(i+1),6000);
+  }
+  document.querySelector('.arrow.prev').onclick=()=>go(i-1);
+  document.querySelector('.arrow.next').onclick=()=>go(i+1);
+  go(0);
+
+  /* Navbar becomes fixed on scroll */
+  const nav=document.querySelector('.main-nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80),{passive:true});
+
+  /* Scroll reveal + counters */
+  document.querySelectorAll('.row > [class*="col-"] > .reveal, .mosaic .reveal, .stats .reveal').forEach((el,n)=>el.style.setProperty('--d',(n%4)*0.1+'s'));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('in');io.unobserve(e.target);
+    e.target.querySelectorAll('[data-count]').forEach(c=>{
+      const t=+c.dataset.count;let v=0;const step=Math.max(1,Math.ceil(t/40));
+      const id=setInterval(()=>{v=Math.min(t,v+step);c.textContent=v;if(v>=t)clearInterval(id);},40);
+    });
+  }),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* Image fallback for gallery */
+  const FB='https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=700&q=75';
+  document.querySelectorAll('.tile img').forEach(m=>m.addEventListener('error',()=>{if(m.src!==FB)m.src=FB;},{once:true}));
+})();
+</script>
+<script src="../firebase/firebase-config.js"></script>
+<script src="../js/popups.js"></script>
+</body>
+</html>

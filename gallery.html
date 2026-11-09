@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery | Cakes, Desserts & Menu | Varyzon Cake Shop</title>
+<meta name="description" content="Browse the Varyzon Cake Shop gallery: designer cakes, cheese cakes, desserts and our full menu. 100% pure vegetarian, Mira Road East.">
+<link rel="icon" href="images/logo.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js")</script>
+<link href="css/base.css" rel="stylesheet">
+<link href="css/shop.css" rel="stylesheet">
+<link href="css/pages.css" rel="stylesheet">
+<link href="css/customize.css" rel="stylesheet">
+<link rel="stylesheet" href="css/popups.css">
+</head>
+<body class="pg">
+<nav class="navbar navbar-expand-lg main-nav scrolled">
+  <div class="container-xl">
+    <a href="index.html" class="logo" aria-label="Varyzon home"><img src="images/logo.png" alt="Varyzon - Freshly baked cakes" width="104" height="104"></a>
+    <button type="button" class="cart-btn mob-cart d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer" aria-label="Open cart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count">0</span></button>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse justify-content-end" id="nav">
+      <ul class="navbar-nav align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item dropdown"><a class="nav-link nav-cakes-toggle" href="our-cakes.html" data-href="our-cakes.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">Our Cakes<i class="fa-solid fa-chevron-down caret"></i></a><ul class="dropdown-menu"><li><a class="dropdown-item" href="our-cakes.html"><i class="fa-solid fa-layer-group"></i>All Cakes</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="indian-sweet-cakes.html"><i class="fa-solid fa-cookie-bite"></i>Indian Sweet Cakes</a></li><li><a class="dropdown-item" href="premium-cakes.html"><i class="fa-solid fa-crown"></i>Premium Cakes</a></li><li><a class="dropdown-item" href="cheese-cakes.html"><i class="fa-solid fa-cheese"></i>Cheese Cakes</a></li><li><a class="dropdown-item" href="exotic-gateau.html"><i class="fa-solid fa-gem"></i>Exotic Gateau</a></li><li><a class="dropdown-item" href="all-season-cakes.html"><i class="fa-solid fa-sun"></i>All Season Cakes</a></li><li><a class="dropdown-item" href="melody-of-fruit-cake.html"><i class="fa-solid fa-lemon"></i>Melody of Fruit Cake</a></li><li><a class="dropdown-item" href="desserts.html"><i class="fa-solid fa-ice-cream"></i>Desserts</a></li></ul></li>
+        <li class="nav-item"><a class="nav-link" href="fillings.html">Fillings</a></li>
+        <li class="nav-item"><a class="nav-link active" href="gallery.html" aria-current="page">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <button type="button" class="cart-btn d-none d-lg-inline-grid ms-lg-2" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer" aria-label="Open cart"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count">0</span></button>
+      <a href="contact.html" class="btn btn-gold pulse ms-lg-3 mt-3 mt-lg-0"><i class="fa-solid fa-bag-shopping"></i>Order Now</a>
+    </div>
+  </div>
+</nav>
+<header class="page-hero" style="--hero-img:url('https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1800&q=75')">
+  <div class="container-xl">
+    <div class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Gallery</div>
+    <h1>Our Gallery</h1>
+    <p>A taste of what comes out of our kitchen: cakes, pastries and desserts made with joy.</p>
+  </div>
+</header>
+
+<main>
+<section class="sec">
+  <div class="container-xl">
+    <div class="chips g-chips mb-4 reveal" role="group" aria-label="Filter gallery">
+      <button type="button" class="active" data-f="all">All</button>
+      <button type="button" data-f="cakes">Cakes</button>
+      <button type="button" data-f="desserts">Desserts</button>
+      <button type="button" data-f="menu">Menu</button>
+      <button type="button" data-f="kitchen">Behind the Scenes</button>
+    </div>
+    <div class="g-grid" id="gGrid">
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=80" data-cap="Chocolate Truffle Cake" aria-label="View Chocolate Truffle Cake"><img loading="lazy" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=72" data-fb alt="Chocolate Truffle Cake"><span class="cap"><b>Chocolate Truffle Cake</b><small>Premium Cakes</small></span></button>
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1400&q=80" data-cap="Cheese Cake" aria-label="View Cheese Cake"><img loading="lazy" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=72" data-fb alt="Cheese Cake"><span class="cap"><b>Cheese Cake</b><small>Cheese Cakes</small></span></button>
+    <button type="button" class="g-item" data-cat="menu" data-full="images/menu-1.jpeg" data-cap="Menu: All Season &amp; Melody of Fruit Cakes" aria-label="View Menu: All Season & Melody of Fruit Cakes"><img loading="lazy" src="images/menu-1.jpeg" alt="Menu: All Season & Melody of Fruit Cakes"><span class="cap"><b>Menu: All Season &amp; Melody of Fruit Cakes</b><small>Menu</small></span></button>
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1400&q=80" data-cap="Exotic Gateau" aria-label="View Exotic Gateau"><img loading="lazy" src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=700&q=72" data-fb alt="Exotic Gateau"><span class="cap"><b>Exotic Gateau</b><small>Exotic Gateau</small></span></button>
+    <button type="button" class="g-item" data-cat="desserts" data-full="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=1400&q=80" data-cap="Pastries &amp; Desserts" aria-label="View Pastries & Desserts"><img loading="lazy" src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=700&q=72" data-fb alt="Pastries & Desserts"><span class="cap"><b>Pastries &amp; Desserts</b><small>Desserts</small></span></button>
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=1400&q=80" data-cap="Indian Sweet Cake" aria-label="View Indian Sweet Cake"><img loading="lazy" src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=700&q=72" data-fb alt="Indian Sweet Cake"><span class="cap"><b>Indian Sweet Cake</b><small>Indian Sweet Cakes</small></span></button>
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1400&q=80" data-cap="Melody of Fruit Cake" aria-label="View Melody of Fruit Cake"><img loading="lazy" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=72" data-fb alt="Melody of Fruit Cake"><span class="cap"><b>Melody of Fruit Cake</b><small>Fruit Cakes</small></span></button>
+    <button type="button" class="g-item" data-cat="menu" data-full="images/menu-2.jpeg" data-cap="Menu: Indian Sweet, Premium, Cheese, Exotic &amp; Desserts" aria-label="View Menu: Indian Sweet, Premium, Cheese, Exotic & Desserts"><img loading="lazy" src="images/menu-2.jpeg" alt="Menu: Indian Sweet, Premium, Cheese, Exotic & Desserts"><span class="cap"><b>Menu: Indian Sweet, Premium, Cheese, Exotic &amp; Desserts</b><small>Menu</small></span></button>
+    <button type="button" class="g-item" data-cat="cakes" data-full="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=1400&q=80" data-cap="All Season Cake" aria-label="View All Season Cake"><img loading="lazy" src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=700&q=72" data-fb alt="All Season Cake"><span class="cap"><b>All Season Cake</b><small>All Season Cakes</small></span></button>
+    <button type="button" class="g-item" data-cat="kitchen" data-full="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1400&q=80" data-cap="Decorated by hand in our kitchen" aria-label="View Decorated by hand in our kitchen"><img loading="lazy" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=700&q=72" data-fb alt="Decorated by hand in our kitchen"><span class="cap"><b>Decorated by hand in our kitchen</b><small>Behind the Scenes</small></span></button>
+    </div>
+    <!-- Add real photos: copy the image into /images/gallery/ and add another <button class="g-item"> tile above. -->
+    <div class="note-bar mt-4 reveal"><i class="fa-solid fa-camera"></i><span>Want a cake like one you have seen? Send us a reference photo on WhatsApp and we will design it for you.</span></div>
+  </div>
+</section>
+
+
+<section class="cta-band">
+  <div class="container-xl reveal">
+    <h2>Fell in Love With a Cake?</h2>
+    <p>Order it for your next celebration. Custom flavours and designs on request.</p>
+    <a href="https://wa.me/919082192602?text=Hi%20Varyzon%2C%20I%20saw%20your%20gallery%20and%20would%20like%20to%20order%20a%20cake." target="_blank" rel="noopener" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i>Order on WhatsApp</a>
+    <a href="our-cakes.html" class="btn btn-ghost"><i class="fa-solid fa-cake-candles"></i>View Our Cakes</a>
+  </div>
+</section>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="modal fade lb" id="lb" tabindex="-1" aria-label="Image viewer" aria-hidden="true">
+  <button type="button" class="lb-nav lb-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+  <button type="button" class="lb-nav lb-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-body text-center position-relative">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <img id="lbImg" src="" alt=""><div class="lb-cap" id="lbCap"></div>
+  </div></div></div>
+</div>
+
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="row g-4 g-lg-5">
+      <div class="col-lg-4">
+        <a href="index.html" class="logo sm mb-3" aria-label="Varyzon home"><img src="images/logo.png" alt="Varyzon - Freshly baked cakes" width="110" height="110"></a>
+        <p style="font-size:.9rem;color:rgba(255,255,255,.75);max-width:320px">A premium, 100% pure vegetarian bakery with 25+ years of expertise behind every cake.</p>
+        <div class="fsocial mt-3">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h4>Quick Links</h4>
+        <ul class="flinks">
+          <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i>Home</a></li>
+          <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i>About Us</a></li>
+          <li><a href="our-cakes.html"><i class="fa-solid fa-chevron-right"></i>Our Cakes</a></li>
+          <li><a href="fillings.html"><i class="fa-solid fa-chevron-right"></i>Fillings</a></li>
+          <li><a href="gallery.html"><i class="fa-solid fa-chevron-right"></i>Gallery</a></li>
+          <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i>Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <h4>Get In Touch</h4>
+        <div class="crow"><i class="fa-solid fa-location-dot"></i><span>Shop no 29 poonam cluster 2, near surya shopping center, mira road east</span></div>
+        <div class="crow"><i class="fa-solid fa-phone"></i><a href="tel:+919082192602">+91 90821 92602</a></div>
+        <div class="crow"><i class="fa-solid fa-envelope"></i><a href="mailto:varyzon2024@gmail.com">varyzon2024@gmail.com</a></div>
+      </div>
+    </div>
+    <div class="fbottom"><strong>&copy; 2024 Varyzon Cake Shop. All Rights Reserved.</strong> &nbsp;|&nbsp; <em>Baked with Joy, Shared with Love.</em></div>
+  </div>
+</footer>
+
+<button class="fab top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+<a class="fab wa" href="https://wa.me/919082192602?text=Hi%20Varyzon%2C%20I%27d%20like%20to%20order%20a%20cake." target="_blank" rel="noopener" aria-label="Order on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/pages.js"></script>
+<script>
+(function(){
+  var items=[].slice.call(document.querySelectorAll('.g-item')),chips=[].slice.call(document.querySelectorAll('.g-chips button'));
+  var lbEl=document.getElementById('lb'),lb=new bootstrap.Modal(lbEl),img=document.getElementById('lbImg'),cap=document.getElementById('lbCap'),cur=0;
+  function vis(){return items.filter(function(i){return !i.classList.contains('hide');});}
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.toggle('active',x===c);});
+    items.forEach(function(i){i.classList.toggle('hide',c.dataset.f!=='all'&&i.dataset.cat!==c.dataset.f);});
+  });});
+  function show(n){var v=vis();if(!v.length)return;cur=(n+v.length)%v.length;var it=v[cur];img.src=it.dataset.full;img.alt=it.querySelector('img').alt;cap.innerHTML=it.dataset.cap;}
+  items.forEach(function(it){it.addEventListener('click',function(){show(vis().indexOf(it));lb.show();});});
+  lbEl.querySelector('.lb-prev').addEventListener('click',function(){show(cur-1);});
+  lbEl.querySelector('.lb-next').addEventListener('click',function(){show(cur+1);});
+  lbEl.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1);});
+})();
+</script>
+<script src="js/customize.js"></script>
+<script src="firebase/firebase-config.js"></script>
+<script src="js/popups.js"></script>
+</body>
+</html>

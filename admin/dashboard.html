@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dashboard | Varyzon Cake Shop</title>
+<link rel="icon" href="../images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="topbar">
+  <img src="../images/logo.png" alt="">
+  <div class="t">Varyzon<small>Orders &amp; enquiries</small></div>
+  <span class="live" id="live"><i></i><span>Live</span></span>
+  <span class="sp"></span>
+  <span class="who" id="who"></span>
+  <a class="btn btn-line" style="color:#fff;border-color:rgba(255,255,255,.5)" href="../index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  <button class="btn btn-line" style="color:#fff;border-color:rgba(255,255,255,.5)" id="out"><i class="fa-solid fa-right-from-bracket me-1"></i>Logout</button>
+</header>
+
+<main class="wrap">
+  <div class="setup d-none" id="setup"></div>
+
+  <section class="stats" id="stats"></section>
+
+  <section class="panel mb-4">
+    <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-2"><h3 style="font-size:1.1rem">Last 7 days</h3><small class="text-muted">new requests per day (all types)</small></div>
+    <div class="chart" id="chart"></div>
+  </section>
+
+  <section class="panel">
+    <nav class="tabs" id="tabs"></nav>
+    <div class="tools">
+      <input class="form-control" id="q" type="search" placeholder="Search name, phone, message...">
+      <select class="form-select" id="sf"><option value="">All statuses</option><option value="new">New</option><option value="confirmed">Confirmed</option><option value="inprogress">In progress</option><option value="done">Completed</option><option value="cancelled">Cancelled</option></select>
+      <span class="sp"></span>
+      <button class="btn btn-line" id="csv"><i class="fa-solid fa-file-csv me-1"></i>Export CSV</button>
+    </div>
+    <div class="scroll"><table class="tbl"><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+    <div class="empty d-none" id="empty"><i class="fa-regular fa-folder-open"></i>Nothing here yet.</div>
+  </section>
+</main>
+
+<!-- detail modal -->
+<div class="modal fade" id="dm" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header border-0 pb-0"><h3 id="dmT" style="font-size:1.4rem"></h3><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+    <div class="modal-body"><dl class="d-grid2" id="dmB"></dl>
+      <label class="small fw-semibold mt-3 mb-1" for="dmS">Status</label>
+      <select class="form-select" id="dmS"><option value="new">New</option><option value="confirmed">Confirmed</option><option value="inprogress">In progress</option><option value="done">Completed</option><option value="cancelled">Cancelled</option></select>
+      <label class="small fw-semibold mt-3 mb-1" for="dmN">Internal note</label>
+      <textarea class="form-control" id="dmN" rows="2" placeholder="Only visible to you"></textarea>
+    </div>
+    <div class="modal-footer border-0 justify-content-between">
+      <button class="btn btn-line" style="color:var(--bad);border-color:var(--bad)" id="dmDel"><i class="fa-solid fa-trash-can me-1"></i>Delete</button>
+      <div class="d-flex gap-2"><a class="btn btn-line" id="dmCall"><i class="fa-solid fa-phone me-1"></i>Call</a><a class="btn btn-line" id="dmWa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp me-1"></i>WhatsApp</a><button class="btn btn-choc" id="dmSave">Save</button></div>
+    </div>
+  </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../firebase/firebase-config.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = window.VZ_FIREBASE.config, isConfigured = window.VZ_FIREBASE.configured;
+
+const $ = id => document.getElementById(id);
+const esc = t => String(t == null ? "" : t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const inr = n => "₹" + Number(n).toLocaleString("en-IN");
+
+const TABS = [
+  { id: "orders", label: "Orders", icon: "fa-bag-shopping" },
+  { id: "enquiries", label: "Enquiries", icon: "fa-envelope" },
+  { id: "callbacks", label: "Callbacks", icon: "fa-phone-volume" },
+  { id: "customizations", label: "Custom cakes", icon: "fa-wand-magic-sparkles" }
+];
+const STATUS = { new: "New", confirmed: "Confirmed", inprogress: "In progress", done: "Completed", cancelled: "Cancelled" };
+const COLS = {
+  orders: [["Received", d => when(d)], ["Customer", d => `<div class="nm">${esc(d.name)}</div><div class="mut">${esc(d.phone)}</div>`], ["Order", d => orderText(d)], ["Needed", d => esc(d.date || "-") + (d.mode ? `<div class="mut">${esc(d.mode)}</div>` : ""), "hide-m"], ["Status", d => pill(d)]],
+  enquiries: [["Received", d => when(d)], ["Customer", d => `<div class="nm">${esc(d.name)}</div><div class="mut">${esc(d.phone)}</div>`], ["Message", d => esc((d.occasion ? d.occasion + " - " : "") + (d.message || "-")).slice(0, 140)], ["Status", d => pill(d)]],
+  callbacks: [["Received", d => when(d)], ["Customer", d => `<div class="nm">${esc(d.name)}</div><div class="mut">${esc(d.phone)}</div>`], ["Best time", d => esc(d.time || "-")], ["Status", d => pill(d)]],
+  customizations: [["Received", d => when(d)], ["Request", d => esc((d.message || "").slice(0, 200))], ["Status", d => pill(d)]]
+};
+function orderText(d) {
+  if (d.items && d.items.length) return d.items.map(i => `${esc(i.name)} <span class="mut">&times;${i.qty}</span>`).join("<br>") + `<div class="mut">Total ${inr(d.total || 0)}</div>`;
+  return esc([d.item, d.weight, d.occasion].filter(Boolean).join(" - ") || "-") + (d.message ? `<div class="mut">${esc(d.message.slice(0, 90))}</div>` : "");
+}
+const ts = d => d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : (d.createdAt ? new Date(d.createdAt) : null);
+function when(d) { const t = ts(d); return t ? `<div>${t.toLocaleDateString("en-IN", { day: "2-digit", month: "short" })}</div><div class="mut">${t.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</div>` : "-"; }
+const pill = d => `<span class="pill s-${esc(d.status || "new")}">${STATUS[d.status] || "New"}</span>`;
+
+if (!isConfigured) {
+  $("setup").classList.remove("d-none");
+  $("setup").innerHTML = "<b>Firebase isn't set up yet.</b> Paste your keys into <code>firebase/firebase-config.js</code>, then reload. <a href='login.html'>Go to login</a>";
+  throw new Error("firebase not configured");
+}
+
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+const data = {}; TABS.forEach(t => data[t.id] = []);
+let tab = "orders", unsubs = [], current = null, seen = {};
+
+onAuthStateChanged(auth, u => {
+  if (!u) return location.replace("login.html");
+  $("who").textContent = u.email;
+  start();
+});
+$("out").onclick = async () => { await signOut(auth); location.replace("login.html"); };
+
+function start() {
+  unsubs.forEach(f => f()); unsubs = [];
+  TABS.forEach(t => {
+    const q = query(collection(db, t.id), orderBy("createdAt", "desc"), limit(500));
+    unsubs.push(onSnapshot(q, snap => {
+      data[t.id] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      $("live").classList.remove("off"); $("live").lastChild.textContent = "Live";
+      if (seen[t.id] !== undefined && data[t.id].length > seen[t.id]) chime();
+      seen[t.id] = data[t.id].length;
+      render();
+    }, err => {
+      console.error(t.id, err); $("live").classList.add("off"); $("live").lastChild.textContent = "No access";
+      $("setup").classList.remove("d-none");
+      $("setup").innerHTML = "<b>Can't read data.</b> Check that your email is listed in <code>firestore.rules</code> (isAdmin) and the rules are published. <small>(" + esc(err.code || err.message) + ")</small>";
+    }));
+  });
+}
+function chime() { try { const c = new (window.AudioContext || window.webkitAudioContext)(), o = c.createOscillator(), g = c.createGain(); o.connect(g); g.connect(c.destination); o.frequency.value = 880; g.gain.setValueAtTime(.15, c.currentTime); g.gain.exponentialRampToValueAtTime(.001, c.currentTime + .4); o.start(); o.stop(c.currentTime + .4); } catch (e) { } }
+
+/* ---------- render ---------- */
+function render() {
+  const all = TABS.flatMap(t => data[t.id]);
+  const newCount = id => data[id].filter(d => (d.status || "new") === "new").length;
+
+  $("stats").innerHTML = TABS.map(t => `<button class="stat ${t.id === tab ? "on" : ""}" data-t="${t.id}"><small><i class="fa-solid ${t.icon} me-1"></i>${t.label}</small><b>${data[t.id].length}</b><br><em>${newCount(t.id)} new</em></button>`).join("");
+  $("tabs").innerHTML = TABS.map(t => `<button class="${t.id === tab ? "on" : ""}" data-t="${t.id}">${t.label}<span class="n ${newCount(t.id) ? "new" : ""}">${newCount(t.id) || data[t.id].length}</span></button>`).join("");
+
+  /* 7-day chart */
+  const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (6 - i)); return d; });
+  const counts = days.map(d => all.filter(x => { const t = ts(x); return t && t.toDateString() === d.toDateString(); }).length), max = Math.max(1, ...counts);
+  $("chart").innerHTML = days.map((d, i) => `<div><b>${counts[i]}</b><span style="height:${counts[i] / max * 62}px"></span>${d.toLocaleDateString("en-IN", { weekday: "short" })}</div>`).join("");
+
+  /* table */
+  const cols = COLS[tab], q = $("q").value.toLowerCase(), sf = $("sf").value;
+  $("th").innerHTML = "<tr>" + cols.map(c => `<th class="${c[2] || ""}">${c[0]}</th>`).join("") + "</tr>";
+  const rows = data[tab].filter(d => (!sf || (d.status || "new") === sf) && (!q || JSON.stringify(d).toLowerCase().includes(q)));
+  $("tb").innerHTML = rows.map(d => `<tr class="rec ${(d.status || "new") === "new" ? "isnew" : ""}" data-id="${d.id}">` + cols.map(c => `<td class="${c[2] || ""}">${c[1](d)}</td>`).join("") + "</tr>").join("");
+  $("empty").classList.toggle("d-none", rows.length > 0);
+}
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-t]"); if (t) { tab = t.dataset.t; render(); return; }
+  const r = e.target.closest("tr.rec"); if (r) openDetail(r.dataset.id);
+});
+$("q").oninput = $("sf").onchange = render;
+
+/* ---------- detail ---------- */
+const dm = new bootstrap.Modal($("dm"));
+const LABEL = { name: "Name", phone: "Phone", item: "Item", occasion: "Occasion", weight: "Weight", date: "Date needed", mode: "Pickup / delivery", time: "Best time", message: "Message", page: "From page" };
+function openDetail(id) {
+  const d = data[tab].find(x => x.id === id); if (!d) return; current = d;
+  $("dmT").textContent = d.name && d.name !== "Website visitor" ? d.name : TABS.find(t => t.id === tab).label.replace(/s$/, "");
+  const t = ts(d);
+  let h = `<dt>Received</dt><dd>${t ? t.toLocaleString("en-IN") : "-"}</dd>`;
+  Object.keys(LABEL).forEach(k => { if (d[k] && d[k] !== "-") h += `<dt>${LABEL[k]}</dt><dd>${esc(d[k])}</dd>`; });
+  if (d.items) h += `<dt>Items</dt><dd>${d.items.map(i => `${esc(i.name)} (${esc(i.unit)}) &times; ${i.qty} = ${inr(i.qty * i.price)}`).join("\n")}\n<b>Total ${inr(d.total || 0)}</b></dd>`;
+  $("dmB").innerHTML = h;
+  $("dmS").value = d.status || "new"; $("dmN").value = d.note || "";
+  const ph = String(d.phone || "").replace(/[^0-9]/g, "");
+  const ok = ph.length >= 10;
+  $("dmCall").style.display = $("dmWa").style.display = ok ? "" : "none";
+  if (ok) { $("dmCall").href = "tel:+" + (ph.length === 10 ? "91" + ph : ph); $("dmWa").href = "https://wa.me/" + (ph.length === 10 ? "91" + ph : ph) + "?text=" + encodeURIComponent("Hi " + (d.name || "") + ", this is Varyzon Cake Shop regarding your " + (tab === "orders" ? "order" : "enquiry") + "."); }
+  dm.show();
+}
+$("dmSave").onclick = async () => {
+  if (!current) return; $("dmSave").disabled = true;
+  try { await updateDoc(doc(db, tab, current.id), { status: $("dmS").value, note: $("dmN").value.trim() }); dm.hide(); }
+  catch (e) { alert("Could not save: " + (e.code || e.message)); }
+  $("dmSave").disabled = false;
+};
+$("dmDel").onclick = async () => {
+  if (!current || !confirm("Delete this record permanently?")) return;
+  try { await deleteDoc(doc(db, tab, current.id)); dm.hide(); } catch (e) { alert("Could not delete: " + (e.code || e.message)); }
+};
+
+/* ---------- CSV ---------- */
+$("csv").onclick = () => {
+  const rows = data[tab]; if (!rows.length) return;
+  const keys = [...new Set(rows.flatMap(r => Object.keys(r)))].filter(k => k !== "id");
+  const cell = v => { if (v && v.toDate) v = v.toDate().toISOString(); else if (typeof v === "object" && v) v = JSON.stringify(v); return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; };
+  const csv = [keys.join(","), ...rows.map(r => keys.map(k => cell(r[k])).join(","))].join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" }));
+  a.download = "varyzon-" + tab + "-" + new Date().toISOString().slice(0, 10) + ".csv"; a.click();
+};
+</script>
+</body>
+</html>
